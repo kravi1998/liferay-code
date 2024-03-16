@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.3.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_3_0.dtd">
+
+<service-builder dependency-injector="ds" package-path="com.liferay.rk.employee">
+	<namespace>Employee</namespace>
+	<!--<entity data-source="sampleDataSource" local-service="true" name="Foo" remote-service="false" session-factory="sampleSessionFactory" table="foo" tx-manager="sampleTransactionManager uuid="true"">-->
+	<entity local-service="true" name="Employee" remote-service="true"
+		uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="employeeId" primary="true" type="long"></column>
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="name" type="String"></column>
+		<column name="phoneNumber" type="long"></column>
+		<column name="salary" type="long"></column>
+		<column name="emailAddress" type="String"></column>
+		<column name="joiningDate" type="Date"></column>
+		<column name="leavingDate" type="Date"></column>
+	</entity>
+</service-builder>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.rk.employee.model.Employee">
+		<field name="uuid" type="String" />
+		<field name="employeeId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="phoneNumber" type="long" />
+		<field name="salary" type="long" />
+		<field name="emailAddress" type="String" />
+		<field name="joiningDate" type="Date" />
+		<field name="leavingDate" type="Date" />
+	</model>
+</model-hints>

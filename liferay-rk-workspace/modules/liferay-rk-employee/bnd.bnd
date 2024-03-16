@@ -1,0 +1,4 @@
+Bundle-Name: liferay-rk-employee
+Bundle-SymbolicName: com.liferay.rk.employee
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.rk.employee.constants

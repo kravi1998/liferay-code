@@ -1,0 +1,10 @@
+Bundle-Name: liferay-rk-employee-service-api
+Bundle-SymbolicName: com.liferay.rk.employee.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.rk.employee.exception,\
+	com.liferay.rk.employee.model,\
+	com.liferay.rk.employee.service,\
+	com.liferay.rk.employee.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../liferay-rk-employee-service-service/service.xml
