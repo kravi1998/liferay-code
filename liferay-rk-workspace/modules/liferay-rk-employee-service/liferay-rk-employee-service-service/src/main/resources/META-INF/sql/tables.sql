@@ -8,6 +8,7 @@ create table Employee_Employee (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
+	address VARCHAR(75) null,
 	phoneNumber LONG,
 	salary LONG,
 	emailAddress VARCHAR(75) null,

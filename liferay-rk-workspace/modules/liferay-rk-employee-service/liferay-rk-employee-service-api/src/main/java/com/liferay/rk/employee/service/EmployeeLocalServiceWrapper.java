@@ -51,11 +51,13 @@ public class EmployeeLocalServiceWrapper
 
 	@Override
 	public com.liferay.rk.employee.model.Employee addEmployee(
-		String name, long phoneNumber, String address, long salary,
-		String emailAddress) {
+		String name, String address, long phoneNumber, long salary,
+		String emailAddress, java.util.Date joiningDate,
+		java.util.Date leavingDate) {
 
 		return _employeeLocalService.addEmployee(
-			name, phoneNumber, address, salary, emailAddress);
+			name, address, phoneNumber, salary, emailAddress, joiningDate,
+			leavingDate);
 	}
 
 	/**

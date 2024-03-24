@@ -11,6 +11,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" />
+		<field name="address" type="String" />
 		<field name="phoneNumber" type="long" />
 		<field name="salary" type="long" />
 		<field name="emailAddress" type="String" />

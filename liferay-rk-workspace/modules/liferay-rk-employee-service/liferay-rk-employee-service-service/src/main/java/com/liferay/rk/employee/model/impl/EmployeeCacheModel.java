@@ -61,7 +61,7 @@ public class EmployeeCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -81,6 +81,8 @@ public class EmployeeCacheModel
 		sb.append(modifiedDate);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", address=");
+		sb.append(address);
 		sb.append(", phoneNumber=");
 		sb.append(phoneNumber);
 		sb.append(", salary=");
@@ -140,6 +142,13 @@ public class EmployeeCacheModel
 			employeeImpl.setName(name);
 		}
 
+		if (address == null) {
+			employeeImpl.setAddress("");
+		}
+		else {
+			employeeImpl.setAddress(address);
+		}
+
 		employeeImpl.setPhoneNumber(phoneNumber);
 		employeeImpl.setSalary(salary);
 
@@ -184,6 +193,7 @@ public class EmployeeCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
+		address = objectInput.readUTF();
 
 		phoneNumber = objectInput.readLong();
 
@@ -227,6 +237,13 @@ public class EmployeeCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		if (address == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(address);
+		}
+
 		objectOutput.writeLong(phoneNumber);
 
 		objectOutput.writeLong(salary);
@@ -251,6 +268,7 @@ public class EmployeeCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public String name;
+	public String address;
 	public long phoneNumber;
 	public long salary;
 	public String emailAddress;

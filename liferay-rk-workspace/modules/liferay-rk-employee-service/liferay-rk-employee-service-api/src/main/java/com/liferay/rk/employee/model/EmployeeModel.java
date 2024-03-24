@@ -220,6 +220,21 @@ public interface EmployeeModel
 	public void setName(String name);
 
 	/**
+	 * Returns the address of this employee.
+	 *
+	 * @return the address of this employee
+	 */
+	@AutoEscape
+	public String getAddress();
+
+	/**
+	 * Sets the address of this employee.
+	 *
+	 * @param address the address of this employee
+	 */
+	public void setAddress(String address);
+
+	/**
 	 * Returns the phone number of this employee.
 	 *
 	 * @return the phone number of this employee

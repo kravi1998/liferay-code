@@ -19,6 +19,8 @@ import com.liferay.rk.employee.model.Employee;
 import com.liferay.rk.employee.model.impl.EmployeeImpl;
 import com.liferay.rk.employee.service.base.EmployeeLocalServiceBaseImpl;
 
+import java.util.Date;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -30,17 +32,19 @@ import org.osgi.service.component.annotations.Component;
 )
 public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 	
-	public Employee addEmployee(String name , long phoneNumber , String address , long salary , String emailAddress)
+	public Employee addEmployee(String name ,String address, long phoneNumber ,  long salary , String emailAddress , Date joiningDate ,Date leavingDate )
 	{
 		Employee employee = new EmployeeImpl();
 		employee.setName(name);
+		employee.setAddress(address);
 		employee.setPhoneNumber(phoneNumber);
 		employee.setSalary(salary);
 		employee.setEmailAddress(emailAddress);
 		
 		long employeeId = counterLocalService.increment(Employee.class.getName());
 		employee.setEmployeeId(employeeId);
-		employeeLocalService.addEmployee(employee);
+		employeeLocalService.addEmployee(employee); 
+		System.out.println("Data save in date base");
 		
 		return employee;
 		

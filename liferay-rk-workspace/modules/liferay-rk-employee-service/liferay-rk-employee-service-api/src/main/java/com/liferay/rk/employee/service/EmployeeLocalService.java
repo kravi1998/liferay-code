@@ -35,6 +35,7 @@ import com.liferay.rk.employee.model.Employee;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -77,8 +78,8 @@ public interface EmployeeLocalService
 	public Employee addEmployee(Employee employee);
 
 	public Employee addEmployee(
-		String name, long phoneNumber, String address, long salary,
-		String emailAddress);
+		String name, String address, long phoneNumber, long salary,
+		String emailAddress, Date joiningDate, Date leavingDate);
 
 	/**
 	 * Creates a new employee with the primary key. Does not add the employee to the database.

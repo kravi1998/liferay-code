@@ -4,7 +4,7 @@
 <service-builder dependency-injector="ds" package-path="com.liferay.rk.employee">
 	<namespace>Employee</namespace>
 	<!--<entity data-source="sampleDataSource" local-service="true" name="Foo" remote-service="false" session-factory="sampleSessionFactory" table="foo" tx-manager="sampleTransactionManager uuid="true"">-->
-	<entity local-service="true" name="Employee" remote-service="true"
+	<entity local-service="true" name="Employee" remote-service="false"
 		uuid="true">
 
 		<!-- PK fields -->
@@ -23,6 +23,7 @@
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
 		<column name="name" type="String"></column>
+		<column name="address" type="String"></column>
 		<column name="phoneNumber" type="long"></column>
 		<column name="salary" type="long"></column>
 		<column name="emailAddress" type="String"></column>

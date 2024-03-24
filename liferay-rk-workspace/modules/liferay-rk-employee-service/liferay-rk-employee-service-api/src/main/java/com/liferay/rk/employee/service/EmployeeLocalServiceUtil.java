@@ -59,11 +59,13 @@ public class EmployeeLocalServiceUtil {
 	}
 
 	public static Employee addEmployee(
-		String name, long phoneNumber, String address, long salary,
-		String emailAddress) {
+		String name, String address, long phoneNumber, long salary,
+		String emailAddress, java.util.Date joiningDate,
+		java.util.Date leavingDate) {
 
 		return getService().addEmployee(
-			name, phoneNumber, address, salary, emailAddress);
+			name, address, phoneNumber, salary, emailAddress, joiningDate,
+			leavingDate);
 	}
 
 	/**

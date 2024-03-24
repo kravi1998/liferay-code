@@ -52,6 +52,7 @@ public class EmployeeWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
+		attributes.put("address", getAddress());
 		attributes.put("phoneNumber", getPhoneNumber());
 		attributes.put("salary", getSalary());
 		attributes.put("emailAddress", getEmailAddress());
@@ -117,6 +118,12 @@ public class EmployeeWrapper
 			setName(name);
 		}
 
+		String address = (String)attributes.get("address");
+
+		if (address != null) {
+			setAddress(address);
+		}
+
 		Long phoneNumber = (Long)attributes.get("phoneNumber");
 
 		if (phoneNumber != null) {
@@ -146,6 +153,16 @@ public class EmployeeWrapper
 		if (leavingDate != null) {
 			setLeavingDate(leavingDate);
 		}
+	}
+
+	/**
+	 * Returns the address of this employee.
+	 *
+	 * @return the address of this employee
+	 */
+	@Override
+	public String getAddress() {
+		return model.getAddress();
 	}
 
 	/**
@@ -311,6 +328,16 @@ public class EmployeeWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	/**
+	 * Sets the address of this employee.
+	 *
+	 * @param address the address of this employee
+	 */
+	@Override
+	public void setAddress(String address) {
+		model.setAddress(address);
 	}
 
 	/**

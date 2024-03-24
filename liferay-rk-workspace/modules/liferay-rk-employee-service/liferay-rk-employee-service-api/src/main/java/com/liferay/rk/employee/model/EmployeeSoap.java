@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.rk.employee.service.http.EmployeeServiceSoap}.
+ * This class is used by SOAP remote services.
  *
  * @author Brian Wing Shun Chan
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -42,6 +42,7 @@ public class EmployeeSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
+		soapModel.setAddress(model.getAddress());
 		soapModel.setPhoneNumber(model.getPhoneNumber());
 		soapModel.setSalary(model.getSalary());
 		soapModel.setEmailAddress(model.getEmailAddress());
@@ -172,6 +173,14 @@ public class EmployeeSoap implements Serializable {
 		_name = name;
 	}
 
+	public String getAddress() {
+		return _address;
+	}
+
+	public void setAddress(String address) {
+		_address = address;
+	}
+
 	public long getPhoneNumber() {
 		return _phoneNumber;
 	}
@@ -221,6 +230,7 @@ public class EmployeeSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _name;
+	private String _address;
 	private long _phoneNumber;
 	private long _salary;
 	private String _emailAddress;

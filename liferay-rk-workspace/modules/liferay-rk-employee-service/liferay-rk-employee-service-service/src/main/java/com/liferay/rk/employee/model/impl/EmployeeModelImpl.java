@@ -20,7 +20,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.rk.employee.model.Employee;
 import com.liferay.rk.employee.model.EmployeeModel;
-import com.liferay.rk.employee.model.EmployeeSoap;
 
 import java.io.Serializable;
 
@@ -42,12 +40,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -64,7 +60,6 @@ import java.util.function.Function;
  * @see EmployeeImpl
  * @generated
  */
-@JSON(strict = true)
 public class EmployeeModelImpl
 	extends BaseModelImpl<Employee> implements EmployeeModel {
 
@@ -80,9 +75,10 @@ public class EmployeeModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"phoneNumber", Types.BIGINT},
-		{"salary", Types.BIGINT}, {"emailAddress", Types.VARCHAR},
-		{"joiningDate", Types.TIMESTAMP}, {"leavingDate", Types.TIMESTAMP}
+		{"name", Types.VARCHAR}, {"address", Types.VARCHAR},
+		{"phoneNumber", Types.BIGINT}, {"salary", Types.BIGINT},
+		{"emailAddress", Types.VARCHAR}, {"joiningDate", Types.TIMESTAMP},
+		{"leavingDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -98,6 +94,7 @@ public class EmployeeModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("address", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("phoneNumber", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("salary", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("emailAddress", Types.VARCHAR);
@@ -106,7 +103,7 @@ public class EmployeeModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Employee_Employee (uuid_ VARCHAR(75) null,employeeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,phoneNumber LONG,salary LONG,emailAddress VARCHAR(75) null,joiningDate DATE null,leavingDate DATE null)";
+		"create table Employee_Employee (uuid_ VARCHAR(75) null,employeeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,address VARCHAR(75) null,phoneNumber LONG,salary LONG,emailAddress VARCHAR(75) null,joiningDate DATE null,leavingDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Employee_Employee";
 
@@ -159,61 +156,6 @@ public class EmployeeModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static Employee toModel(EmployeeSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		Employee model = new EmployeeImpl();
-
-		model.setUuid(soapModel.getUuid());
-		model.setEmployeeId(soapModel.getEmployeeId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setName(soapModel.getName());
-		model.setPhoneNumber(soapModel.getPhoneNumber());
-		model.setSalary(soapModel.getSalary());
-		model.setEmailAddress(soapModel.getEmailAddress());
-		model.setJoiningDate(soapModel.getJoiningDate());
-		model.setLeavingDate(soapModel.getLeavingDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<Employee> toModels(EmployeeSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<Employee> models = new ArrayList<Employee>(soapModels.length);
-
-		for (EmployeeSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public EmployeeModelImpl() {
@@ -339,6 +281,9 @@ public class EmployeeModelImpl
 		attributeGetterFunctions.put("name", Employee::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<Employee, String>)Employee::setName);
+		attributeGetterFunctions.put("address", Employee::getAddress);
+		attributeSetterBiConsumers.put(
+			"address", (BiConsumer<Employee, String>)Employee::setAddress);
 		attributeGetterFunctions.put("phoneNumber", Employee::getPhoneNumber);
 		attributeSetterBiConsumers.put(
 			"phoneNumber",
@@ -365,7 +310,6 @@ public class EmployeeModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
-	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -394,7 +338,6 @@ public class EmployeeModelImpl
 		return getColumnOriginalValue("uuid_");
 	}
 
-	@JSON
 	@Override
 	public long getEmployeeId() {
 		return _employeeId;
@@ -409,7 +352,6 @@ public class EmployeeModelImpl
 		_employeeId = employeeId;
 	}
 
-	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -433,7 +375,6 @@ public class EmployeeModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
-	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -458,7 +399,6 @@ public class EmployeeModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
-	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -489,7 +429,6 @@ public class EmployeeModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
-	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -509,7 +448,6 @@ public class EmployeeModelImpl
 		_userName = userName;
 	}
 
-	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -524,7 +462,6 @@ public class EmployeeModelImpl
 		_createDate = createDate;
 	}
 
-	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -545,7 +482,6 @@ public class EmployeeModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
-	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -565,7 +501,25 @@ public class EmployeeModelImpl
 		_name = name;
 	}
 
-	@JSON
+	@Override
+	public String getAddress() {
+		if (_address == null) {
+			return "";
+		}
+		else {
+			return _address;
+		}
+	}
+
+	@Override
+	public void setAddress(String address) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_address = address;
+	}
+
 	@Override
 	public long getPhoneNumber() {
 		return _phoneNumber;
@@ -580,7 +534,6 @@ public class EmployeeModelImpl
 		_phoneNumber = phoneNumber;
 	}
 
-	@JSON
 	@Override
 	public long getSalary() {
 		return _salary;
@@ -595,7 +548,6 @@ public class EmployeeModelImpl
 		_salary = salary;
 	}
 
-	@JSON
 	@Override
 	public String getEmailAddress() {
 		if (_emailAddress == null) {
@@ -615,7 +567,6 @@ public class EmployeeModelImpl
 		_emailAddress = emailAddress;
 	}
 
-	@JSON
 	@Override
 	public Date getJoiningDate() {
 		return _joiningDate;
@@ -630,7 +581,6 @@ public class EmployeeModelImpl
 		_joiningDate = joiningDate;
 	}
 
-	@JSON
 	@Override
 	public Date getLeavingDate() {
 		return _leavingDate;
@@ -716,6 +666,7 @@ public class EmployeeModelImpl
 		employeeImpl.setCreateDate(getCreateDate());
 		employeeImpl.setModifiedDate(getModifiedDate());
 		employeeImpl.setName(getName());
+		employeeImpl.setAddress(getAddress());
 		employeeImpl.setPhoneNumber(getPhoneNumber());
 		employeeImpl.setSalary(getSalary());
 		employeeImpl.setEmailAddress(getEmailAddress());
@@ -850,6 +801,14 @@ public class EmployeeModelImpl
 			employeeCacheModel.name = null;
 		}
 
+		employeeCacheModel.address = getAddress();
+
+		String address = employeeCacheModel.address;
+
+		if ((address != null) && (address.length() == 0)) {
+			employeeCacheModel.address = null;
+		}
+
 		employeeCacheModel.phoneNumber = getPhoneNumber();
 
 		employeeCacheModel.salary = getSalary();
@@ -982,6 +941,7 @@ public class EmployeeModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;
+	private String _address;
 	private long _phoneNumber;
 	private long _salary;
 	private String _emailAddress;
@@ -1026,6 +986,7 @@ public class EmployeeModelImpl
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("address", _address);
 		_columnOriginalValues.put("phoneNumber", _phoneNumber);
 		_columnOriginalValues.put("salary", _salary);
 		_columnOriginalValues.put("emailAddress", _emailAddress);
@@ -1072,15 +1033,17 @@ public class EmployeeModelImpl
 
 		columnBitmasks.put("name", 256L);
 
-		columnBitmasks.put("phoneNumber", 512L);
+		columnBitmasks.put("address", 512L);
 
-		columnBitmasks.put("salary", 1024L);
+		columnBitmasks.put("phoneNumber", 1024L);
 
-		columnBitmasks.put("emailAddress", 2048L);
+		columnBitmasks.put("salary", 2048L);
 
-		columnBitmasks.put("joiningDate", 4096L);
+		columnBitmasks.put("emailAddress", 4096L);
 
-		columnBitmasks.put("leavingDate", 8192L);
+		columnBitmasks.put("joiningDate", 8192L);
+
+		columnBitmasks.put("leavingDate", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
