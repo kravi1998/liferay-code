@@ -1,0 +1,4 @@
+Bundle-Name: liferay-rk-login-activity
+Bundle-SymbolicName: com.liferay.rk.login.activity
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.rk.login.activity.constants

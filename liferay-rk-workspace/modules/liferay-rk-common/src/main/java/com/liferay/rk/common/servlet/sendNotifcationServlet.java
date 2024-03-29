@@ -51,6 +51,8 @@ public class sendNotifcationServlet extends HttpServlet{
 			LOGGER.error("Error in sending mail ");
 		}
 		
+		
+		
 
 	}
 	@Reference
