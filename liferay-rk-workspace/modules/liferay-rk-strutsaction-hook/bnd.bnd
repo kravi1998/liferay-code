@@ -1,0 +1,4 @@
+Bundle-Name: liferay-rk-strutsaction-hook
+Bundle-SymbolicName: com.liferay.rk.struts.action
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.rk.struts.action.constants
