@@ -1,0 +1,4 @@
+Bundle-Name: liferay-rk-modellistener-hook
+Bundle-SymbolicName: liferay.rk.modellistener.hook
+Bundle-Version: 1.0.0
+Export-Package: liferay.rk.modellistener.hook.constants
