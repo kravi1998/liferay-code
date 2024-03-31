@@ -1,0 +1,11 @@
+dependencies {
+	compile project(":modules:liferay-rk-restbuilder:liferay-rk-restbuilder-api")
+
+	compileOnly group: "com.liferay.portal", name: "release.portal.api"
+	restBuilder (group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.212") {force = true}
+	implementation group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
+	implementation group: 'javax.xml', name: 'jaxrpc-api', version: '1.1'
+	
+}
+
+group = "com.liferay.rk.rest.builder"

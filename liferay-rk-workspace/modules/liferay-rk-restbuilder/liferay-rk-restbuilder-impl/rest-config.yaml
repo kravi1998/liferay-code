@@ -1,0 +1,9 @@
+apiDir: "../liferay-rk-restbuilder-api/src/main/java"
+apiPackagePath: "com.liferay.rk.rest.builder"
+application:
+    baseURI: "/liferay-rk-restbuilder"
+    className: "LiferayRkRestbuilderApplication"
+    name: "LiferayRkRestbuilder"
+author: "Ravi"
+clientDir: "../liferay-rk-restbuilder-client/src/main/java"
+testDir: "../liferay-rk-restbuilder-test/src/testIntegration/java"

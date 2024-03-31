@@ -1,0 +1,6 @@
+Bundle-Name: liferay-rk-restbuilder-api
+Bundle-SymbolicName: com.liferay.rk.rest.builder.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.rk.rest.builder.dto.v1_0,\
+	com.liferay.rk.rest.builder.resource.v1_0

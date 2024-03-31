@@ -1,0 +1,3 @@
+Bundle-Name: liferay-rk-restbuilder-client
+Bundle-SymbolicName: com.liferay.rk.rest.builder.client
+Bundle-Version: 1.0.0
