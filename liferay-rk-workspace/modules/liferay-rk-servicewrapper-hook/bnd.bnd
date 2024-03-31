@@ -1,0 +1,3 @@
+Bundle-Name: liferay-rk-servicewrapper-hook
+Bundle-SymbolicName: com.liferay.rk.service.wrapper
+Bundle-Version: 1.0.0
