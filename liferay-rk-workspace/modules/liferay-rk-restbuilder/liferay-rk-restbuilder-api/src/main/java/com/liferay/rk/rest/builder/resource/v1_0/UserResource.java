@@ -9,6 +9,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.rk.rest.builder.dto.v1_0.UserObject;
 
 import java.util.Collections;
@@ -41,7 +42,13 @@ public interface UserResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<UserObject> getUserById(Long userId) throws Exception;
+	public UserObject getUserById(Long userId) throws Exception;
+
+	public Page<UserObject> getUsers(Pagination pagination) throws Exception;
+
+	public UserObject updateUser(UserObject userObject) throws Exception;
+
+	public UserObject deleteUserById(Long userId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

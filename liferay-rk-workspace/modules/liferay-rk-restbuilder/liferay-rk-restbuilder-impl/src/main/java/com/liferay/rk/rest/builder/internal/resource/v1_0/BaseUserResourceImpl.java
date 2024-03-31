@@ -13,6 +13,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.rk.rest.builder.dto.v1_0.UserObject;
@@ -57,14 +58,92 @@ public abstract class BaseUserResourceImpl implements UserResource {
 	@javax.ws.rs.Path("/get-user")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<UserObject> getUserById(
+	public UserObject getUserById(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.QueryParam("userId")
 			Long userId)
 		throws Exception {
 
+		return new UserObject();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/liferay-rk-restbuilder/v1.0/get-users'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "User")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/get-users")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<UserObject> getUsers(
+			@javax.ws.rs.core.Context Pagination pagination)
+		throws Exception {
+
 		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/liferay-rk-restbuilder/v1.0/update-user' -d $'{"email": ___, "firstName": ___, "lastName": ___, "screenName": ___, "statusCode": ___, "statusMessage": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "User")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/update-user")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public UserObject updateUser(UserObject userObject) throws Exception {
+		return new UserObject();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/liferay-rk-restbuilder/v1.0/delete-user'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "userId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "User")}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path("/delete-user")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public UserObject deleteUserById(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.QueryParam("userId")
+			Long userId)
+		throws Exception {
+
+		return new UserObject();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

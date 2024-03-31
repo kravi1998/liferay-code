@@ -27,12 +27,78 @@ paths:
           content:
             application/json:
               schema:
+                $ref: "#/components/schemas/UserObject"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/UserObject"
+      tags: ["User"]
+  "/get-users":
+    get:
+      operationId: getUsers
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Success Response"
+          content:
+            application/json:
+              schema:
                 items:
                   $ref: "#/components/schemas/UserObject"
             application/xml:
               schema:
                 items:
                   $ref: "#/components/schemas/UserObject"
+      tags: ["User"]
+  "/update-user":
+    post:
+      operationId: updateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserObject"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/UserObject"
+      responses:
+        200:
+          description: "Success Response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserObject"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/UserObject"
+      tags: ["User"]
+  "/delete-user":
+    delete:
+      operationId: deleteUserById
+      parameters:
+        - in: query
+          name: userId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: "Success Response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserObject"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/UserObject"
       tags: ["User"]
 components:
   schemas:

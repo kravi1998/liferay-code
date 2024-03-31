@@ -10,16 +10,20 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.rk.rest.builder.client.dto.v1_0.UserObject;
 import com.liferay.rk.rest.builder.client.http.HttpInvoker;
 import com.liferay.rk.rest.builder.client.pagination.Page;
+import com.liferay.rk.rest.builder.client.pagination.Pagination;
 import com.liferay.rk.rest.builder.client.resource.v1_0.UserResource;
 
 import java.lang.reflect.Field;
@@ -94,16 +98,16 @@ public abstract class BaseUserResourceTestCase {
 	}
 
 	@Test
-	public void testGetUserById() throws Exception {
-		Page<User> page = userResource.getUserById(null);
+	public void testGetUsers() throws Exception {
+		Page<User> page = userResource.getUsers(Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
-		User user1 = testGetUserById_addUser(randomUser());
+		User user1 = testGetUsers_addUser(randomUser());
 
-		User user2 = testGetUserById_addUser(randomUser());
+		User user2 = testGetUsers_addUser(randomUser());
 
-		page = userResource.getUserById(null);
+		page = userResource.getUsers(Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -112,9 +116,81 @@ public abstract class BaseUserResourceTestCase {
 		assertValid(page);
 	}
 
-	protected User testGetUserById_addUser(User user) throws Exception {
+	@Test
+	public void testGetUsersWithPagination() throws Exception {
+		Page<User> totalPage = userResource.getUsers(null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
+		User user1 = testGetUsers_addUser(randomUser());
+
+		User user2 = testGetUsers_addUser(randomUser());
+
+		User user3 = testGetUsers_addUser(randomUser());
+
+		Page<User> page1 = userResource.getUsers(
+			Pagination.of(1, totalCount + 2));
+
+		List<User> users1 = (List<User>)page1.getItems();
+
+		Assert.assertEquals(users1.toString(), totalCount + 2, users1.size());
+
+		Page<User> page2 = userResource.getUsers(
+			Pagination.of(2, totalCount + 2));
+
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+		List<User> users2 = (List<User>)page2.getItems();
+
+		Assert.assertEquals(users2.toString(), 1, users2.size());
+
+		Page<User> page3 = userResource.getUsers(
+			Pagination.of(1, totalCount + 3));
+
+		assertContains(user1, (List<User>)page3.getItems());
+		assertContains(user2, (List<User>)page3.getItems());
+		assertContains(user3, (List<User>)page3.getItems());
+	}
+
+	protected User testGetUsers_addUser(User user) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetUsers() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testDeleteUserById() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGetUserById() throws Exception {
+		User postUser = testGetUser_addUser();
+
+		UserObject postUserObject = testGetUserById_addUserObject(
+			postUser.getId(), randomUserObject());
+
+		UserObject getUserObject = userResource.getUserById(postUser.getId());
+
+		assertEquals(postUserObject, getUserObject);
+		assertValid(getUserObject);
+	}
+
+	protected UserObject testGetUserById_addUserObject(
+			long userId, UserObject userObject)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testUpdateUser() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	protected void assertContains(Object user, List<Object> users) {
@@ -153,6 +229,14 @@ public abstract class BaseUserResourceTestCase {
 
 			assertEquals(user1, user2);
 		}
+	}
+
+	protected void assertEquals(
+		UserObject userObject1, UserObject userObject2) {
+
+		Assert.assertTrue(
+			userObject1 + " does not equal " + userObject2,
+			equals(userObject1, userObject2));
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -206,7 +290,81 @@ public abstract class BaseUserResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected void assertValid(UserObject userObject) {
+		boolean valid = true;
+
+		for (String additionalAssertFieldName :
+				getAdditionalUserObjectAssertFieldNames()) {
+
+			if (Objects.equals("email", additionalAssertFieldName)) {
+				if (userObject.getEmail() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("firstName", additionalAssertFieldName)) {
+				if (userObject.getFirstName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("lastName", additionalAssertFieldName)) {
+				if (userObject.getLastName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("screenName", additionalAssertFieldName)) {
+				if (userObject.getScreenName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("statusCode", additionalAssertFieldName)) {
+				if (userObject.getStatusCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("statusMessage", additionalAssertFieldName)) {
+				if (userObject.getStatusMessage() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("userId", additionalAssertFieldName)) {
+				if (userObject.getUserId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
+	}
+
 	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
+	protected String[] getAdditionalUserObjectAssertFieldNames() {
 		return new String[0];
 	}
 
@@ -289,6 +447,96 @@ public abstract class BaseUserResourceTestCase {
 		}
 
 		return false;
+	}
+
+	protected boolean equals(UserObject userObject1, UserObject userObject2) {
+		if (userObject1 == userObject2) {
+			return true;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalUserObjectAssertFieldNames()) {
+
+			if (Objects.equals("email", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userObject1.getEmail(), userObject2.getEmail())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("firstName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userObject1.getFirstName(),
+						userObject2.getFirstName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("lastName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userObject1.getLastName(), userObject2.getLastName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("screenName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userObject1.getScreenName(),
+						userObject2.getScreenName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("statusCode", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userObject1.getStatusCode(),
+						userObject2.getStatusCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("statusMessage", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userObject1.getStatusMessage(),
+						userObject2.getStatusMessage())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("userId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userObject1.getUserId(), userObject2.getUserId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
 	}
 
 	protected Field[] getDeclaredFields(Class clazz) throws Exception {
@@ -391,6 +639,20 @@ public abstract class BaseUserResourceTestCase {
 
 		return JSONFactoryUtil.createJSONObject(
 			invoke(queryGraphQLField.toString()));
+	}
+
+	protected UserObject randomUserObject() throws Exception {
+		return new UserObject() {
+			{
+				email = RandomTestUtil.randomString();
+				firstName = RandomTestUtil.randomString();
+				lastName = RandomTestUtil.randomString();
+				screenName = RandomTestUtil.randomString();
+				statusCode = RandomTestUtil.randomInteger();
+				statusMessage = RandomTestUtil.randomString();
+				userId = RandomTestUtil.randomLong();
+			}
+		};
 	}
 
 	protected UserResource userResource;

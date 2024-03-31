@@ -3,10 +3,13 @@ package com.liferay.rk.rest.builder.internal.resource.v1_0;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.rk.rest.builder.dto.v1_0.UserObject;
 import com.liferay.rk.rest.builder.resource.v1_0.UserResource;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
@@ -25,10 +28,33 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 
 	
 	@Override
-	public Page<UserObject> getUserById(@NotNull Long userId) throws Exception {
+	public UserObject getUserById(@NotNull Long userId) throws Exception {
 		User user = userLocalService.getUser(userId);
 		UserObject userObject =getUserFromModel(user);
-		return Page.of(Collections.singleton(userObject));
+		return userObject;
+	}
+	@Override
+	public UserObject deleteUserById(@NotNull Long userId) throws Exception {
+		UserObject userObject = new UserObject();
+		try {
+			userLocalService.deleteUser(userId);
+			userObject.setStatusCode(200);
+			userObject.setStatusMessage("Deleted Successfully");
+		} catch (Exception e) {
+			userObject.setStatusCode(500);
+			userObject.setStatusMessage(e.getMessage());
+		}
+		return userObject;
+	}
+	@Override
+	public Page<UserObject> getUsers(Pagination pagination) throws Exception {
+		List userObjects = new ArrayList<>();
+		List<User> users = userLocalService.getUsers(pagination.getStartPosition(), pagination.getEndPosition());
+		for (User user : users) {
+			UserObject userObject = getUserFromModel(user);
+			userObjects.add(userObject);
+		}
+		return Page.of(userObjects, pagination, userObjects.size());
 	}
 	private UserObject getUserFromModel(User user) {
 		UserObject userObject = new UserObject();
