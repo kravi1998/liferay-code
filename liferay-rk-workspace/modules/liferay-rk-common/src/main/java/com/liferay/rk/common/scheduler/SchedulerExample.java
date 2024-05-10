@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Date;
 import java.util.Map;
-
+ 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
